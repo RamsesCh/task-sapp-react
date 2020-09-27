@@ -36,7 +36,6 @@ class AddNew extends React.Component{
                             <div className="form-row align-items-end">
                                 <div className="col-10">
                                     <div className="form-group">
-                                        <label htmlFor="inputTitulo">Titulo</label>
                                         <input type="text" className="form-control" id="InputTitulo" name="title" onChange={this.handleChange} value={this.state.title} />
                                     </div>
                                 </div>

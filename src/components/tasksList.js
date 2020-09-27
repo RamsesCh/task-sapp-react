@@ -2,10 +2,9 @@ import React from 'react';
 import { faTasks } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import CardTask from './cardTask';
-import LoaderComponent from './loader';
-import AddNew from './addNew';
 
-class TasksComponent extends React.Component{
+class TasksList extends React.Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -16,10 +15,10 @@ class TasksComponent extends React.Component{
     }
 
     async componentDidMount(){
-        await this.fetchTasks();
+        await this.getAllTasks();
     }
 
-    fetchTasks = async () => {
+    getAllTasks = async () => {
         try {
             let res = await fetch('http://localhost:8000/api/tasks')
             let data = await res.json()
@@ -84,40 +83,9 @@ class TasksComponent extends React.Component{
         }
     }
 
-    handleSubmit = async (value) => {
-        this.setState({
-            loading: false
-        })
-        try {
-            let config = {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(value)
-            }
-            
-            await fetch('http://localhost:8000/api/tasks', config);
-            await this.fetchTasks();
-            this.props.history.push('/')
-        } catch (error) {
-            this.setState({
-                loading: false,
-                error
-            })            
-        }
-    }
-
     render(){
-        if(this.state.loading){
-            return <LoaderComponent/>
-        } else {
-            return (
+        return (
             <div>
-                <AddNew 
-                    propSubmit={this.handleSubmit}
-                />
                 <div className="bg-white py-3 mt-3 shadow-sm rounded">
                     <div className="row mb-3 px-5">
                         <div className="col-12">
@@ -140,11 +108,9 @@ class TasksComponent extends React.Component{
                         })
                     }
                 </div>
-
             </div>
         )
-        }
     }
 }
 
-export default TasksComponent;
+export default TasksList;
